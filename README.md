@@ -39,8 +39,8 @@ Here are some example snippets to help you get started creating a container.
 version: "2.1"
 services:
   mikhmon:
-    image: animegasan/phpnuxbill:latest
-    container_name: phpnuxbill
+    image: YD2XDT/PHPNUXBILL-Clone:latest
+    container_name: PHPNUXBILL-Clone
     ports:
       - 8080:80
     restart: unless-stopped
@@ -52,7 +52,7 @@ docker run -d \
   --name=phpnuxbill \
   -p 8080:80 \
   --restart unless-stopped \
-  animegasan/phpnuxbill:latest
+  YD2XDT/PHPNUXBILL-Clone:latest
 ```
 
 ---
