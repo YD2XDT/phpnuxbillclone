@@ -19,6 +19,8 @@ RUN apk add --no-cache \
     php81-mbstring \
     php81-mysqli \
     php81-session \
+    php81-zip \
+    php81-curl \
     php81-pdo \
     php81-pdo_mysql \
     mysql \
