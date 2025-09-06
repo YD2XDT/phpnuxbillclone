@@ -1,9 +1,9 @@
 FROM alpine:latest
 
 LABEL Maintainer="Hilman Maulana, Ibnu Maksum, Rizki Rahmatullah"
-LABEL Description="PHPNuxBill (PHP Mikrotik Billing) with PHP 8.1 on Alpine Linux."
+LABEL Description="PHPNuxBill (PHP Mikrotik Billing) with PHP 7.4 on Alpine Linux."
 
-# Setup document root
+# Setup working directory
 WORKDIR /var/www/html
 
 # Expose port
@@ -13,21 +13,20 @@ EXPOSE 3306
 # Install packages dan dependencies
 RUN apk add --no-cache \
     nginx \
-    php81 \
-    php81-fpm \
-    php81-gd \
-    php81-mbstring \
-    php81-mysqli \
-    php81-session \
-    php81-zip \
-    php81-curl \
-    php81-pdo \
-    php81-pdo_mysql \
+    php74 \
+    php74-fpm \
+    php74-gd \
+    php74-mbstring \
+    php74-mysqli \
+    php74-session \
+    php74-zip \
+    php74-curl \
+    php74-pdo \
+    php74-pdo_mysql \
     mysql \
     mysql-client \
     libzip-dev \
     zip \
-    unzip\
     supervisor \
     && apk add --no-cache --virtual .build-deps \
        build-base \
@@ -45,9 +44,9 @@ COPY conf/my.cnf /etc/mysql/my.cnf
 COPY conf/mysql.sh /app/mysql.sh
 RUN chmod +x /app/mysql.sh
 
-# Copy konfigurasi PHP-FPM (sesuaikan dengan PHP 8.1)
-COPY conf/php-fpm.conf /etc/php81/php-fpm.d/www.conf
-COPY conf/php.ini /etc/php81/conf.d/custom.ini
+# Copy konfigurasi PHP-FPM (sesuaikan dengan PHP 7.4)
+COPY conf/php-fpm.conf /etc/php74/php-fpm.d/www.conf
+COPY conf/php.ini /etc/php74/conf.d/custom.ini
 
 # Copy supervisord configuration
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
