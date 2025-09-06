@@ -1,16 +1,16 @@
-# Startup from alpine
 FROM alpine:latest
-LABEL Maintainer = "Hilman Maulana, Ibnu Maksum, Rizki Rahmatullah"
-LABEL Description = "PHPNuxBill (PHP Mikrotik Billing) is a web-based application (MikroTik API PHP class) Voucher management for MikroTik Hotspot."
+
+LABEL Maintainer="Hilman Maulana, Ibnu Maksum, Rizki Rahmatullah"
+LABEL Description="PHPNuxBill (PHP Mikrotik Billing) with PHP 8.1 on Alpine Linux."
 
 # Setup document root
 WORKDIR /var/www/html
 
-# Expose the port nginx is reachable on
+# Expose port
 EXPOSE 80
 EXPOSE 3306
 
-# Install packages
+# Install packages dan dependencies
 RUN apk add --no-cache \
     nginx \
     php81 \
@@ -27,25 +27,33 @@ RUN apk add --no-cache \
     mysql-client \
     libzip-dev \
     zip \
-    supervisor
+    unzip\
+    supervisor \
+    && apk add --no-cache --virtual .build-deps \
+       build-base \
+       zlib-dev \
+       libzip-dev \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install zip \
+    && apk del .build-deps
 
-# Configure nginx
+# Copy konfigurasi nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# Configure MySQL
+# Copy konfigurasi MySQL
 COPY conf/my.cnf /etc/mysql/my.cnf
 COPY conf/mysql.sh /app/mysql.sh
 RUN chmod +x /app/mysql.sh
 
-# Configure PHP-FPM
-COPY conf/fpm-pool.conf /etc/php81/php-fpm.d/www.conf
+# Copy konfigurasi PHP-FPM (sesuaikan dengan PHP 8.1)
+COPY conf/php-fpm.conf /etc/php81/php-fpm.d/www.conf
 COPY conf/php.ini /etc/php81/conf.d/custom.ini
 
-# Configure supervisord
+# Copy supervisord configuration
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Add application
-COPY --chown=nginx src /var/www/html/
+# Tambahkan source code aplikasi
+COPY --chown=nginx:nginx src /var/www/html/
 
-# Let supervisord start nginx & php-fpm
+# Perintah utama container
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
