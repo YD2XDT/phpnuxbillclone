@@ -39,7 +39,7 @@ Here are some example snippets to help you get started creating a container.
 version: "2.2"
 services:
   mikhmon:
-    image: YD2XDT/PHPNUXBILL-Clone:latest
+    image: yd2xdt/phpnuxbill-clone:latest
     container_name: PHPNUXBILL-Clone
     ports:
       - 8080:80
