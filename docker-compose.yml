@@ -1,7 +1,7 @@
 version: "2.2"
 services:
   mikhmon:
-    image: yd2xdt/phpnuxbill-clone:latest
+    image: yd2xdt/phpnuxbillclone:latest
     container_name: phpnuxbill
     ports:
       - 8080:80
