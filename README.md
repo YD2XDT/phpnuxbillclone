@@ -36,7 +36,7 @@ Here are some example snippets to help you get started creating a container.
 ### docker-compose (recommended)
 ```yaml
 ---
-version: "2.1"
+version: "2.2"
 services:
   mikhmon:
     image: YD2XDT/PHPNUXBILL-Clone:latest
